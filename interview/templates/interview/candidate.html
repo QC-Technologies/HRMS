@@ -1,0 +1,5 @@
+    <table class="table table-bordered">
+        {% csrf_token %}
+        {{ form.as_table }}
+    </table>
+    <input type="submit" class="btn btn-primary" value="Save Data">

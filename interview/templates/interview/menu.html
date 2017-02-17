@@ -1,0 +1,21 @@
+<nav class="nav navbar-inverse navbar-fixed-top">
+    <div id="navbar" class="navbar-collapse collapse">
+        {% if user.is_authenticated %}
+            <ul class="nav navbar-nav">
+                <li><a href="#/main/">Home</a></li>
+                <li><a href="#/candidate-profile/">Profile</a></li>
+                <li><a href="#/candidates/">Candidates</a></li>
+                <li><a href="#">Schedule</a></li>
+            </ul>
+            <div class="pull-right" style="color: #FFFFFF;width: 145px; padding-top: 10px; padding-right: 10px;">
+                <p style="float: left;">{{ user.first_name }} {{ user.last_name }}</p>
+                <a style="float: right;" href="{% url 'logout' %}"> Logout</a>
+            </div>
+        {% else %}
+            <ul class="nav navbar-nav">
+                <li><a href="{% url 'login' %}">Login</a></li>
+                <li><a href="{% url 'register' %}">Register</a></li>
+            </ul>
+        {% endif %}
+    </div>
+</nav>
