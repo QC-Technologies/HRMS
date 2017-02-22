@@ -1,0 +1,47 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="close()" aria-hidden="true">&times;</button>
+    <h4 class="modal-title" id="modal-title">Schedule Interview For The Selected Candidate</h4>
+</div>
+<div class="modal-body" id="schedule_interview_table">
+    <table class="table table-bordered table-striped">
+       <tbody>
+            <tr>
+                <td><label>Candidate Name</label></td>
+                <td>{{ candidate.fields.first_name }} {{ candidate.fields.last_name }}</td>
+            </tr>
+            <tr>
+                <td><label>Candidate Email</label></td>
+                <td>{{ candidate.fields.email }}</td>
+            </tr>
+            <tr>
+                <td><label>Select Interviewer</label></td>
+                <td>
+                    <select class="form-control">
+                        <option>Select Interviewer</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label>Interview Date</label></td>
+                <td>
+                    <p class="input-group">
+                          <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                          <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="openCalendar()"><i class="glyphicon glyphicon-calendar"></i></button>
+                          </span>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td style="vertical-align: middle;"><label>Interview Time</label></td>
+                <td>
+                    <div uib-timepicker ng-model="at" hour-step="1" minute-step="5"></div>
+                </td>
+            </tr>
+       </tbody>
+    </table>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-danger" type="button" ng-click="scheduleInterview()">Schedule</button>
+    <button class="btn btn-primary" type="button" ng-click="close()">Close</button>
+</div>

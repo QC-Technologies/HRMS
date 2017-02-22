@@ -1,0 +1,18 @@
+{% extends 'interview/base.html' %}
+{% block content %}
+    <div class="row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-8">
+            {% if user.is_authenticated %}
+                <div id="content">
+                    Welcome {{ user.first_name }} {{ user.last_name }} To
+                    Online Portal Of QC Technologies. This portal can be used
+                    to schedule interview online.
+                    <div ng-view></div>
+                </div>
+            {% endif %}
+        </div>
+        <div class="col-sm-2"></div>
+    </div>
+{% endblock %}
+
