@@ -43,6 +43,7 @@ urlpatterns = [
 
     url(r'^profile/', views.build_profile, name='build_profile'),
     url(r'^candidates-list/', views.candidates_list, name='candidates_list'),
+    url(r'^interviews-list/', views.interviews_list, name='interviews_list'),
     url(r'^schedule-interview/', views.schedule_interview, name='schedule_interview'),
 
     url(r'^', views.index)

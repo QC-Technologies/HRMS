@@ -9,7 +9,8 @@ from django.core import mail
 from .forms import CandidateForm
 from django.views.decorators.csrf import csrf_exempt
 from django.template import loader
-from .models import Candidate, Interview
+#from .models import Candidate, Interview
+import models
 import constants
 
 
@@ -50,7 +51,7 @@ def build_profile(request):
 @csrf_exempt
 def candidates_list(request):
     response = {}
-    candidates = Candidate.objects.all()
+    candidates = models.Candidate.objects.all()
 
     response['data'] = serializers.serialize('json', candidates)
     return HttpResponse(json.dumps(response))
@@ -62,8 +63,25 @@ def schedule_interview(request):
     candidate_id = data.get('candidate_id')
     date = datetime.strptime(data.get('date'), '%Y-%m-%dT%H:%M:%S.%fZ').date()
     time = datetime.strptime(data.get('time'), '%Y-%m-%dT%H:%M:%S.%fZ').time()
-    #Interview.objects.create(candidate_id=candidate_id,
-     #                        date=date,
-      #                       time=time)
-    mail.send_mail('subject here', 'here is the message', 'afnannazir.qc@gmail.com', ['afnannazir.qc@gmail.com'])
+    models.Interview.objects.create(candidate_id=candidate_id,
+                            date=date,
+                             time=time)
+    #mail.send_mail('subject here', 'here is the message', 'afnannazir.qc@gmail.com', ['afnannazir.qc@gmail.com'])
     return HttpResponse(json.dumps(response))
+
+def interviews_list(request):
+        data = []
+        interviews = models.Interview.objects.all()
+        for interview in interviews:
+            data_dict = dict()
+            data_dict['full_name'] = ('{0} {1}'.format(
+                interview.candidate.first_name,
+                interview.candidate.last_name
+            ))
+            data_dict['date'] = interview.date.strftime('%d-%m-%Y')
+            data_dict['time'] = interview.time.strftime('%H:%i')
+            data_dict['pk'] = interview.pk
+            data.append(data_dict)
+        return HttpResponse(json.dumps(data))
+
+
