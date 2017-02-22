@@ -1,13 +1,16 @@
 import json
 
+from datetime import datetime
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm
 from django.core import serializers
+from django.core import mail
 from .forms import CandidateForm
 from django.views.decorators.csrf import csrf_exempt
 from django.template import loader
-from .models import Candidate
+from .models import Candidate, Interview
+import constants
 
 
 def index(request):
@@ -55,4 +58,12 @@ def candidates_list(request):
 
 def schedule_interview(request):
     response = {}
+    data = json.loads(request.body)
+    candidate_id = data.get('candidate_id')
+    date = datetime.strptime(data.get('date'), '%Y-%m-%dT%H:%M:%S.%fZ').date()
+    time = datetime.strptime(data.get('time'), '%Y-%m-%dT%H:%M:%S.%fZ').time()
+    #Interview.objects.create(candidate_id=candidate_id,
+     #                        date=date,
+      #                       time=time)
+    mail.send_mail('subject here', 'here is the message', 'afnannazir.qc@gmail.com', ['afnannazir.qc@gmail.com'])
     return HttpResponse(json.dumps(response))

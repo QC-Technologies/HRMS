@@ -1,6 +1,6 @@
 <div class="modal-header">
     <button type="button" class="close" ng-click="close()" aria-hidden="true">&times;</button>
-    <h4 class="modal-title" id="modal-title">Schedule interview for the selected candidate</h4>
+    <h4 class="modal-title" id="modal-title">Schedule Interview For The Selected Candidate</h4>
 </div>
 <div class="modal-body" id="schedule_interview_table">
     <table class="table table-bordered table-striped">
@@ -25,7 +25,7 @@
                 <td><label>Interview Date</label></td>
                 <td>
                     <p class="input-group">
-                          <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="data.date" is-open="popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                          <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
                           <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="openCalendar()"><i class="glyphicon glyphicon-calendar"></i></button>
                           </span>
@@ -35,7 +35,7 @@
             <tr>
                 <td style="vertical-align: middle;"><label>Interview Time</label></td>
                 <td>
-                    <div uib-timepicker ng-model="data.time" hour-step="1" minute-step="5"></div>
+                    <div uib-timepicker ng-model="at" hour-step="1" minute-step="5"></div>
                 </td>
             </tr>
        </tbody>

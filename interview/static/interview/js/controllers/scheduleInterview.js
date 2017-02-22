@@ -7,19 +7,19 @@ define([
 ], function (app) {
     app.controller('ScheduleInterview', ['$scope', '$uibModalInstance', 'Interview', 'candidate',
         function ($scope, $modalInstance, interviewService, candidate) {
-            $scope.candidate= candidate;
+            $scope.candidate = candidate;
+	    $scope.at = new Date();
+	    $scope.dt = new Date();
             $scope.data = {
                 'candidate_id': candidate.pk,
                 'interview_id': '',
-                'date': new Date,
-                'time': new Date,
             };
 
             $scope.popup = {
                 opened: false
             };
             $scope.dateOptions = {
-                dateDisabled: $scope.disabled,
+                dateDisabled: disabled,
                 formatYear: 'yy',
                 maxDate: new Date(2020, 5, 22),
                 minDate: new Date(),
@@ -29,7 +29,7 @@ define([
                 $scope.popup.opened = true;
             };
             // Disable weekend selection
-            $scope.disabled = function (data) {
+            function disabled(data) {
                 var date = data.date,
                 mode = data.mode;
                 return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
@@ -37,8 +37,8 @@ define([
             $scope.scheduleInterview = function () {
                var data = $scope.data;
                 debugger;
-               data.date = data.date.toDateString();
-               data.time = data.time.toTimeString();
+               data.date = $scope.dt;
+               data.time = $scope.at;
                interviewService.scheduleInterview(data)
                     .then(
                         function(res){
