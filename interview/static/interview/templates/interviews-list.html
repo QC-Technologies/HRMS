@@ -1,0 +1,23 @@
+<div id="interviews_list">
+    <table class="table table-striped table-bordered table-hovered">
+        <thead>
+            <th>Candidate Name</th>
+            <th>Interview Date</th>
+            <th>Interview Time</th>
+            <th>Edit</th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="interview in data.interviews">
+                <td>{{ interview.full_name}}</td>
+                <td>{{ interview.date}}</td>
+                <td>{{ interview.time}}</td>
+                <td>
+                    <button class="btn btn-primary" ng-click="editScheduleView(interview)">
+                        Schedule
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+   <ul uib-pagination total-items="bigTotalItems" ng-model="bigCurrentPage" items-per-page="perPage" max-size="maxSize" class="pagination-sm" boundary-links="true" rotate="false" ng-change="pageChanged()"></ul>
+</div>

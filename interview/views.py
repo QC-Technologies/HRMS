@@ -1,4 +1,5 @@
 import json
+import pdb
 
 from datetime import datetime
 from django.http import HttpResponseRedirect, HttpResponse
@@ -6,6 +7,7 @@ from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm
 from django.core import serializers
 from django.core import mail
+from django.core.paginator import Paginator
 from .forms import CandidateForm
 from django.views.decorators.csrf import csrf_exempt
 from django.template import loader
@@ -69,19 +71,25 @@ def schedule_interview(request):
     #mail.send_mail('subject here', 'here is the message', 'afnannazir.qc@gmail.com', ['afnannazir.qc@gmail.com'])
     return HttpResponse(json.dumps(response))
 
+
 def interviews_list(request):
-        data = []
-        interviews = models.Interview.objects.all()
-        for interview in interviews:
-            data_dict = dict()
-            data_dict['full_name'] = ('{0} {1}'.format(
-                interview.candidate.first_name,
-                interview.candidate.last_name
-            ))
-            data_dict['date'] = interview.date.strftime('%d-%m-%Y')
-            data_dict['time'] = interview.time.strftime('%H:%i')
-            data_dict['pk'] = interview.pk
-            data.append(data_dict)
-        return HttpResponse(json.dumps(data))
+    #pdb.set_trace()
+    response  = {'data': [], 'page':{}}
+    page = request.POST.get('page', 1)
+    perPage = request.POST.get('perPage');
+    interviews = models.Interview.objects.all()
+    paginator = Paginator(interviews, perPage)
+    response['page']['total'] = paginator.count
+    for interview in paginator.page(page):
+        response['data'].append({
+        'full_name':('{0} {1}'.format(
+            interview.candidate.first_name,
+            interview.candidate.last_name
+        )),
+        'date':interview.date.strftime('%d-%m-%Y'),
+        'time':interview.time.strftime('%H:%i'),
+        'pk':interview.pk
+        })
+    return HttpResponse(json.dumps(response))
 
 

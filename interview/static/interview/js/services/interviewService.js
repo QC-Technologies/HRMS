@@ -11,8 +11,19 @@ define(['app'], function(app){
                 {headers:{'Content-Type': 'application/x-www-form-urlencoded'}}
             );
         };
-        factory.getInterviews = function() {
-            return $http.get('interviews-list/');
+        factory.getInterviews = function(method, data) {
+	    if (typeof method == undefined) {
+	    	method = 'GET';
+	    }
+	    if (typeof data == undefined ) {
+	    	data = {};
+	    }
+	    return $http({
+	    	url: 'interviews-list/',
+		method: method,
+		data: data,
+		headers:{'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
+	    })
         };
         return factory
     })
