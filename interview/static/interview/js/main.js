@@ -13,6 +13,7 @@ require.config({
         'user': 'interview/js/controllers/user',
         'candidate_profile': 'interview/js/controllers/candidateProfile',
         'candidates_list': 'interview/js/controllers/candidatesList',
+        'interviews_list': 'interview/js/controllers/interviewsList',
         'schedule_interview': 'interview/js/controllers/scheduleInterview',
     },
     shim: {
@@ -21,7 +22,7 @@ require.config({
         },
         'app': ['angular', 'bootstrap', 'ui-bootstrap'],
         'ui-bootstrap': ['bootstrap', 'angular'],
-        'routes':['user', 'candidate_profile', 'candidates_list']
+        'routes':['user', 'candidate_profile', 'candidates_list', 'interviews_list']
     }
 });
 

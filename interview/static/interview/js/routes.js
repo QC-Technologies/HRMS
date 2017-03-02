@@ -23,6 +23,10 @@ define([
                       templateUrl : STATIC_URL + "interview/templates/candidates-list.html",
                       controller: 'CandidatesList'
                   })
+                  .when("/interviews/", {
+                      templateUrl : STATIC_URL + "interview/templates/interviews-list.html",
+                      controller: 'InterviewsList'
+                  })
                   .otherwise({ redirectTo: '/main/' });
 		}]);
 });
