@@ -87,7 +87,7 @@ def interviews_list(request):
             interview.candidate.last_name
         )),
         'date':interview.date.strftime('%d-%m-%Y'),
-        'time':interview.time.strftime('%H:%i'),
+        'time':interview.time.strftime('%I:%M %p'),
         'pk':interview.pk
         })
     return HttpResponse(json.dumps(response))

@@ -11,12 +11,11 @@ define([
         function ($scope, $sce, $modal, interviewService) {
         $scope.data = {
             'interviews': [],
-	    'page': {'total': 175, 'number': 1, 'size': 2}
         };
 	    $scope.maxSize = 5;
 	    $scope.bigCurrentPage = 1;
 	    $scope.bigTotalItems = 0;
-	    $scope.perPage = 2;
+	    $scope.perPage = 20;
 
 	    $scope.getList = function (method) {
 		data = {
