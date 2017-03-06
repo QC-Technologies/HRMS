@@ -68,6 +68,9 @@ class Candidate(TimeStampedModel):
         return "%s %s (%s)" % (self.first_name.title(), self.last_name.title(),
                                self.email)
 
+    def full_name(self):
+        return self.first_name + ' ' + self.last_name
+
 
 class InterviewRemarks(TimeStampedModel):
     interview = models.OneToOneField('Interview', related_name='remarks')
