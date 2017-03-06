@@ -13,3 +13,6 @@ DEBUG = False
 
 AWS_ACCESS_KEY_ID = 'aws_access_key_id_here'
 AWS_SECRET_ACCESS_KEY = 'aws_secret_access_key_here'
+
+MAILGUN_DOMAIN_NAME = "mailgun_domain_here"
+MAILGUN_API_KEY = "mailgun_api_key_here"
