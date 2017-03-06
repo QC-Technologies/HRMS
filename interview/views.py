@@ -1,9 +1,11 @@
 import json
 import pdb
-
 from datetime import datetime
+
+import requests
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import render
+from django.conf import settings
 from django.contrib.auth.forms import UserCreationForm
 from django.core import serializers
 from django.core import mail
@@ -66,11 +68,15 @@ def schedule_interview(request):
     date = datetime.strptime(data.get('date'), '%Y-%m-%dT%H:%M:%S.%fZ').date()
     time = datetime.strptime(data.get('time'), '%Y-%m-%dT%H:%M:%S.%fZ').time()
     models.Interview.objects.create(candidate_id=candidate_id,
-                            date=date,
-                             time=time)
-    #mail.send_mail('subject here', 'here is the message', 'afnannazir.qc@gmail.com', ['afnannazir.qc@gmail.com'])
+                                    date=date,
+                                    time=time)
+    candidate = models.Candidate.objects.get(pk=candidate_id)
+    body = constants.CANDIDATE_EMAIL_BODY.format(
+        candidate.full_name(),
+        date,
+        time)
+    mail = mailgun_send_email([candidate.email], body)
     return HttpResponse(json.dumps(response))
-
 
 def interviews_list(request):
     #pdb.set_trace()
@@ -92,4 +98,16 @@ def interviews_list(request):
         })
     return HttpResponse(json.dumps(response))
 
+
+def mailgun_send_email(to, text, subject='Interview Scheduled'):
+    """Send email through mailgun and requests."""
+    return requests.post(
+        "https://api.mailgun.net/v3/%s/messages" % settings.MAILGUN_DOMAIN_NAME,
+        auth=("api", settings.MAILGUN_API_KEY),
+        data={
+            "from":constants.HR_EMAIL,
+            "to": to,
+            "subject": subject,
+            "text": text
+        })
 
