@@ -1,21 +1,41 @@
-<nav class="nav navbar-inverse navbar-fixed-top">
-    <div id="navbar" class="navbar-collapse collapse">
+<md-toolbar>
         {% if user.is_authenticated %}
+	<md-nav-bar
+	          md-selected-nav-item="page1"
+		        nav-bar-aria-label="navigation links">
+	    <md-nav-item md-nav-href="#/main/" name="page1">Home</md-nav-item>
+	    <md-nav-item md-nav-href="#/candidate-profile/" name="page2">Add Candidate</md-nav-item>
+	    <md-nav-item md-nav-href="#/candidates/" name="page3">Candidates</md-nav-item>
+	    <md-nav-item md-nav-href="#/interviews/" name="page4">Schedules</md-nav-item>
+	</md-nav-bar>
+	<div layout="row" layout-align="end start">
+	    <p layout-margin>{{ user.first_name }} {{ user.last_name }}</p>
+	    <a layout-margin href="{% url 'logout' %}">Logout</a>
+	</div>
+	<!--
             <ul class="nav navbar-nav">
                 <li><a href="#/main/">Home</a></li>
                 <li><a href="#/candidate-profile/">Profile</a></li>
                 <li><a href="#/candidates/">Candidates</a></li>
                 <li><a href="#/interviews/">Schedule</a></li>
             </ul>
+	    <span flex></span>
             <div class="pull-right" style="color: #FFFFFF;width: 145px; padding-top: 10px; padding-right: 10px;">
                 <p style="float: left;">{{ user.first_name }} {{ user.last_name }}</p>
                 <a style="float: right;" href="{% url 'logout' %}"> Logout</a>
-            </div>
+	    </div>-->
         {% else %}
-            <ul class="nav navbar-nav">
+	<!--<md-nav-bar md-selected-nav-item="page1" nav-bar-aria-label="navigation links">
+	    <md-nav-item md-nav-href="{% url 'login' %}" name="page1">Login</md-nav-item>
+	    <md-nav-item md-nav-href="{% url 'register' %}" name="page2">Register</md-nav-item>
+	    </md-nav-bar>-->
+            <!--<ul class="nav navbar-nav">
                 <li><a href="{% url 'login' %}">Login</a></li>
                 <li><a href="{% url 'register' %}">Register</a></li>
-            </ul>
+	    </ul>-->
+	    <div layout="row">
+                <a layout-margin href="{% url 'login' %}">Login</a>
+                <a layout-margin href="{% url 'register' %}">Register</a>
+	    </div>
         {% endif %}
-    </div>
-</nav>
+</md-toolbar>
