@@ -8,8 +8,8 @@ define([
     'interview/js/services/candidate',
     'interview/js/filters/sanitize'
 ], function (app) {
-    app.controller('CandidatesList', ['$scope', '$sce', '$uibModal', 'Candidate',
-        function ($scope, $sce, $modal, candidateService) {
+    app.controller('CandidatesList', ['$scope', '$sce', '$uibModal', '$mdDialog', 'Candidate',
+        function ($scope, $sce, $modal, $md, candidateService) {
         $scope.data = {
             'candidates': []
         };
@@ -21,15 +21,15 @@ define([
                 console.log(data);
             });
         $scope.openScheduleView = function (candidate) {
-            $modal.open({
-                animation: true,
+            $md.show({
                 templateUrl: $sce.trustAsResourceUrl(STATIC_URL + 'interview/templates/schedule-interview.html'),
                 controller: 'ScheduleInterview',
-                size: 'lg',
-                resolve: {
-                    candidate: function () {
-                        return candidate;
-                    }
+                parent: angular.element(document.body),
+		fullscreen: true,
+                locals: {
+                    candidate:  
+                        candidate
+                    
                 }
             });
         }

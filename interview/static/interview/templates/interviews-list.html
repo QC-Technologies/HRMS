@@ -4,17 +4,17 @@
             <th>Candidate Name</th>
             <th>Interview Date</th>
             <th>Interview Time</th>
-            <th>Edit</th>
+            <th class="text-center">Edit</th>
         </thead>
         <tbody>
             <tr ng-repeat="interview in data.interviews">
                 <td>{{ interview.full_name}}</td>
                 <td>{{ interview.date}}</td>
                 <td>{{ interview.time}}</td>
-                <td>
-                    <button class="btn btn-primary" ng-click="editScheduleView(interview)">
+                <td class="text-center">
+                    <md-button class="md-raised md-primary" ng-click="editScheduleView(interview)">
                         Reschedule
-                    </button>
+                    </md-button>
                 </td>
             </tr>
         </tbody>

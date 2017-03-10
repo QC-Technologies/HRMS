@@ -5,7 +5,7 @@
             <th>Last Name</th>
             <th>Email</th>
             <th>Institute</th>
-            <th>Schedule Interview</th>
+            <th class="text-center">Schedule</th>
         </thead>
         <tbody>
             <tr ng-repeat="candidate in data.candidates">
@@ -13,10 +13,10 @@
                 <td>{{ candidate.fields.last_name}}</td>
                 <td>{{ candidate.fields.email}}</td>
                 <td>{{ candidate.fields.institute}}</td>
-                <td>
-                    <button class="btn btn-primary" ng-click="openScheduleView(candidate)">
+                <td class="text-center">
+                    <md-button class="md-raised md-primary" ng-click="openScheduleView(candidate)">
                         Schedule
-                    </button>
+                    </md-button>
                 </td>
             </tr>
         </tbody>
