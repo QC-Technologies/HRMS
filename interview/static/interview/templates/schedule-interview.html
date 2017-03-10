@@ -1,8 +1,14 @@
-<div class="modal-header">
-    <button type="button" class="close" ng-click="close()" aria-hidden="true">&times;</button>
-    <h4 class="modal-title" id="modal-title">Schedule Interview For The Selected Candidate</h4>
-</div>
-<div class="modal-body" id="schedule_interview_table">
+<md-dialog flex aria-label="Schedule Interview For The Selected Candidate">
+<md-toolbar>
+    <div class="md-toolbar-tools">
+	<h2>Schedule Interview For The Selected Candidate</h2>
+	<span flex></span>
+	<md-button class="md-icon-button" ng-click="close()">
+	    &times;
+	</md-button>
+    </div>
+</md-toolbar>
+<md-dialog-content class="md-dialog-content" id="schedule_interview_table">
     <table class="table table-bordered table-striped">
        <tbody>
             <tr>
@@ -24,12 +30,7 @@
             <tr>
                 <td><label>Interview Date</label></td>
                 <td>
-                    <p class="input-group">
-                          <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt" is-open="popup.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
-                          <span class="input-group-btn">
-                            <button type="button" class="btn btn-default" ng-click="openCalendar()"><i class="glyphicon glyphicon-calendar"></i></button>
-                          </span>
-                    </p>
+		    <md-datepicker ng-model="dt" md-date-filter="daysSelectable" md-min-date="today" md-placeholder="Enter date"></md-datepicker>
                 </td>
             </tr>
             <tr>
@@ -40,8 +41,10 @@
             </tr>
        </tbody>
     </table>
-</div>
-<div class="modal-footer">
-    <button class="btn btn-danger" type="button" ng-click="scheduleInterview()">Schedule</button>
-    <button class="btn btn-primary" type="button" ng-click="close()">Close</button>
-</div>
+</md-dialog-content>
+<md-dialog-actions layout="row">
+    <md-progress-circular ng-show="activated" class="md-hue-1" md-diameter="40"></md-progress-circular>
+    <md-button class="md-raised md-warn" ng-disabled="activated" ng-click="scheduleInterview()">Schedule</md-button>
+    <md-button class="md-raised md-primary" type="button" ng-click="close()">Close</md-button>
+</md-dialog-actions>
+</md-dialog>

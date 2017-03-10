@@ -6,6 +6,9 @@ require.config({
     paths: {
         'angular': 'js/angular.min',
         'angular-route': 'js/angular-route.min',
+        'angular-animate': 'js/angular-animate.min',
+        'angular-area': 'js/angular-area.min',
+	'angular-material': 'js/angular-material.min',
         'bootstrap': 'js/bootstrap.min',
         'ui-bootstrap': 'js/ui-bootstrap-tpls-2.5.0.min',
         'app': 'interview/js/app',
@@ -20,7 +23,10 @@ require.config({
         'angular': {
           exports: 'angular '
         },
-        'app': ['angular', 'bootstrap', 'ui-bootstrap'],
+        'app': ['angular','angular-animate', 'angular-area', 'angular-material', 'bootstrap', 'ui-bootstrap'],
+	'angular-animate': ['angular'],
+	'angular-area': ['angular'],
+	'angular-material': ['angular', 'angular-animate', 'angular-area'],
         'ui-bootstrap': ['bootstrap', 'angular'],
         'routes':['user', 'candidate_profile', 'candidates_list', 'interviews_list']
     }
