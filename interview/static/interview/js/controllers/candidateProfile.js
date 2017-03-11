@@ -6,8 +6,9 @@ define([
     'interview/js/services/candidate',
     'interview/js/filters/sanitize'
 ], function (app) {
-    app.controller('CandidateProfile', ['$scope', 'Candidate', '$sce', function ($scope, candidateService, $sce) {
+    app.controller('CandidateProfile', ['$scope','$mdDialog', 'Candidate', '$sce', function ($scope, $md, candidateService, $sce) {
         $scope.form = '';
+	$scope.activated = false;
         candidateService.getForm()
             .success(function(res){
                 $scope.form = res.form;
@@ -19,6 +20,7 @@ define([
             return $sce.trustAsHtml(htmlCode);
         };
         $scope.submitForm = function(form) {
+	    $scope.activated = true;
             var fd = new FormData(),
                 data = $('#candidate_profile').serializeArray();
             $.each(data, function(key, input){
@@ -27,12 +29,17 @@ define([
             fd.append('cv', document.getElementById("id_cv").files[0]);
             candidateService.saveForm(fd)
             .success(function(res){
+		$scope.activated = false;
                 $scope.form = res.form;
-                if (res.success) {
-                    alert('Success saving candidate!');
+		if (res.success) {
+		    $md.show(
+			$md.alert()
+			.title('Successfully candidate created')
+			.ok('OK'));
                 }
             })
             .error(function(data, status, headers, config){
+		$scope.activated = false;
                 console.log(data);
             });
         }

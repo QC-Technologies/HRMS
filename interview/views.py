@@ -52,12 +52,17 @@ def build_profile(request):
     response['form'] = template.render({'form': form}, request)
     return HttpResponse(json.dumps(response))
 
-@csrf_exempt
-def candidates_list(request):
-    response = {}
-    candidates = models.Candidate.objects.all()
 
-    response['data'] = serializers.serialize('json', candidates)
+
+def candidates_list(request):
+    """Get paginated list of candidates"""
+    response = {'data': [], 'page': {}}
+    page = request.POST.get('page', 1)
+    perPage = request.POST.get('perPage')
+    candidates = models.Candidate.objects.all()
+    paginator = Paginator(candidates, perPage)
+    response['page']['total'] = paginator.count
+    response['data'] = serializers.serialize('json', paginator.page(page))
     return HttpResponse(json.dumps(response))
 
 
@@ -78,9 +83,10 @@ def schedule_interview(request):
     mail = mailgun_send_email([candidate.email], body)
     return HttpResponse(json.dumps(response))
 
+
+
 def interviews_list(request):
-    #pdb.set_trace()
-    response  = {'data': [], 'page':{}}
+    response  = {'data': [], 'page': {}}
     page = request.POST.get('page', 1)
     perPage = request.POST.get('perPage');
     interviews = models.Interview.objects.all()
