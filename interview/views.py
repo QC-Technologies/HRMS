@@ -10,6 +10,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core import serializers
 from django.core import mail
 from django.core.paginator import Paginator
+from django.db.models import Q
 from .forms import CandidateForm
 from django.views.decorators.csrf import csrf_exempt
 from django.template import loader
@@ -52,12 +53,25 @@ def build_profile(request):
     response['form'] = template.render({'form': form}, request)
     return HttpResponse(json.dumps(response))
 
-@csrf_exempt
-def candidates_list(request):
-    response = {}
-    candidates = models.Candidate.objects.all()
 
-    response['data'] = serializers.serialize('json', candidates)
+
+def candidates_list(request):
+    """Get paginated list of candidates"""
+    response = {'data': [], 'page': {}}
+    page = request.POST.get('page', 1)
+    perPage = request.POST.get('perPage')
+    term = request.POST.get('search_term', '').strip()
+    if term:
+        candidates = models.Candidate.objects.filter(
+            Q(first_name__icontains=term) |
+            Q(last_name__icontains=term) |
+            Q(email__icontains=term) |
+            Q(institute__icontains=term))
+    else:
+        candidates = models.Candidate.objects.all()
+    paginator = Paginator(candidates, perPage)
+    response['page']['total'] = paginator.count
+    response['data'] = serializers.serialize('json', paginator.page(page))
     return HttpResponse(json.dumps(response))
 
 
@@ -78,9 +92,10 @@ def schedule_interview(request):
     mail = mailgun_send_email([candidate.email], body)
     return HttpResponse(json.dumps(response))
 
+
+
 def interviews_list(request):
-    #pdb.set_trace()
-    response  = {'data': [], 'page':{}}
+    response  = {'data': [], 'page': {}}
     page = request.POST.get('page', 1)
     perPage = request.POST.get('perPage');
     interviews = models.Interview.objects.all()

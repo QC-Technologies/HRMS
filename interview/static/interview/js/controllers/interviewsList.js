@@ -9,9 +9,9 @@ define([
 ], function (app) {
     app.controller('InterviewsList', ['$scope', '$sce', '$uibModal', 'Interview',
         function ($scope, $sce, $modal, interviewService) {
-        $scope.data = {
-            'interviews': [],
-        };
+	    $scope.data = {
+		'interviews': [],
+	    };
 	    $scope.maxSize = 5;
 	    $scope.bigCurrentPage = 1;
 	    $scope.bigTotalItems = 0;

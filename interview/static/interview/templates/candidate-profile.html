@@ -1,3 +1,7 @@
 <form enctype="multipart/form-data" id="candidate_profile" name="candidateForm" ng-submit="submitForm(candidateForm)" method="post">
-    <div ng-bind-html="renderHtml(form)"></div>
+    <div id="form"></div>
+    <div layout="row" layout-align="end end">
+	<md-progress-circular ng-show="activated" class="md-hue-1" layout-align="start end" md-diameter="42"></md-progress-circular>
+	<md-button class="md-raised md-primary" type="submit" ng-disabled="activated">Add Candidate</md-button>
+    </div>
 </form>

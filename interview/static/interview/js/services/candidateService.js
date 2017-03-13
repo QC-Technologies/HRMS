@@ -15,8 +15,13 @@ define(['app'], function(app){
                    headers:{'Content-Type': undefined}}
                );
        };
-       factory.getCandidates = function() {
-           return $http.get("candidates-list/");
+       factory.getCandidates = function(data) {
+	   return $http({
+	       url: 'candidates-list/',
+	       method: 'POST',
+	       data: data,
+	       headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'}
+	   })
        };
        return factory
    })
