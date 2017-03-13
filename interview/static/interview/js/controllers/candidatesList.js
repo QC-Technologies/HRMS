@@ -5,7 +5,7 @@
 define([
     'app',
     'schedule_interview',
-    'interview/js/services/candidate',
+    'interview/js/services/candidateService',
     'interview/js/filters/sanitize'
 ], function (app) {
     app.controller('CandidatesList', ['$scope', '$sce', '$mdDialog', 'Candidate',
@@ -17,11 +17,13 @@ define([
 	    $scope.bigCurrentPage = 1;
 	    $scope.bigTotalItems = 0;
 	    $scope.perPage = 20;
+	    $scope.search_term = '';
 
 	    $scope.getList = function () {
 		var data = {
 		    'perPage': $scope.perPage,
-		    'page': $scope.bigCurrentPage
+		    'page': $scope.bigCurrentPage,
+		    'search_term': $scope.search_term
 		}
 		candidateService.getCandidates($.param(data))
 		    .then(

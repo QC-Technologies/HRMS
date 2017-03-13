@@ -1,3 +1,9 @@
+<form ng-submit="getList()">
+<md-input-container flex layout="row">
+    <label>Search Candidate</label>
+    <input ng-model="search_term" type="text">
+</md-input-container>
+</form>
 <div id="candidates_list">
     <table class="table table-striped table-bordered table-hovered">
         <thead>

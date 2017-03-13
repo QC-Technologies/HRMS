@@ -3,21 +3,20 @@
  */
 define([
     'app',
-    'interview/js/services/candidate',
+    'interview/js/services/candidateService',
     'interview/js/filters/sanitize'
 ], function (app) {
-    app.controller('CandidateProfile', ['$scope','$mdDialog', 'Candidate', '$sce', function ($scope, $md, candidateService, $sce) {
-        $scope.form = '';
+    app.controller('CandidateProfile', ['$scope','$mdDialog', '$sce', '$compile', 'Candidate', function ($scope, $md, $sce, $compile, candidateService) {
 	$scope.activated = false;
         candidateService.getForm()
             .success(function(res){
-                $scope.form = res.form;
+                angular.element('#form').append($compile(res.form)($scope));
             })
             .error(function(data, status, headers, config){
                 console.log(data);
             });
         $scope.renderHtml = function (htmlCode) {
-            return $sce.trustAsHtml(htmlCode);
+	    return $sce.trustAsHtml(htmlCode);
         };
         $scope.submitForm = function(form) {
 	    $scope.activated = true;
@@ -30,11 +29,13 @@ define([
             candidateService.saveForm(fd)
             .success(function(res){
 		$scope.activated = false;
-                $scope.form = res.form;
+		var el = angular.element('#form');
+		el.html('');
+                el.append($compile(res.form)($scope));
 		if (res.success) {
 		    $md.show(
 			$md.alert()
-			.title('Successfully candidate created')
+			.title('Candidate added successfully')
 			.ok('OK'));
                 }
             })

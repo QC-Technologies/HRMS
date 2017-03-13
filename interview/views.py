@@ -10,6 +10,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.core import serializers
 from django.core import mail
 from django.core.paginator import Paginator
+from django.db.models import Q
 from .forms import CandidateForm
 from django.views.decorators.csrf import csrf_exempt
 from django.template import loader
@@ -59,7 +60,15 @@ def candidates_list(request):
     response = {'data': [], 'page': {}}
     page = request.POST.get('page', 1)
     perPage = request.POST.get('perPage')
-    candidates = models.Candidate.objects.all()
+    term = request.POST.get('search_term', '').strip()
+    if term:
+        candidates = models.Candidate.objects.filter(
+            Q(first_name__icontains=term) |
+            Q(last_name__icontains=term) |
+            Q(email__icontains=term) |
+            Q(institute__icontains=term))
+    else:
+        candidates = models.Candidate.objects.all()
     paginator = Paginator(candidates, perPage)
     response['page']['total'] = paginator.count
     response['data'] = serializers.serialize('json', paginator.page(page))
